@@ -1,9 +1,11 @@
 const path=require('path');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
+
 module.exports={    //配置对象
     //入口
     entry: {
-        app:path.resolve(__dirname,'src/index.js')
+        app:path.resolve(__dirname,'src02_todos/index.js')
     },
     //出口
     output: {
@@ -26,8 +28,16 @@ module.exports={    //配置对象
             },
             //处理css
             {
-                test: /\.css$/i,
-                use: ['style-loader', 'css-loader'],
+                test: /\.css$/,
+                use: [
+                    'vue-style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            esModule: false
+                        }
+                    }
+                ]
             },
             //处理图片
             {
@@ -42,7 +52,11 @@ module.exports={    //配置对象
                     },
                 ],
             },
-
+            //处理Vue单文件组件
+            {
+                test: /\.vue$/,
+                loader: 'vue-loader'
+            },
         ]
     },
     //插件
@@ -50,11 +64,19 @@ module.exports={    //配置对象
         new HtmlWebpackPlugin({
             template:'index.html', //将哪个页面作为模板页面处理(在根目录查找)
             filename:'index.html' //生成页面(在output指定的path下)
-        })
+        }),
+        new VueLoaderPlugin(),
+
     ],
     devServer: {
         open:true, //自动打开浏览器
         // quiet:true //不做太多的日志输出
     },
-
+    // 引入模块的解析
+    resolve: {
+        extensions: ['.js', '.vue', '.json'], // 可以省略的后缀名
+        alias: { // 路径别名(简写方式)
+            'vue$': 'vue/dist/vue.esm.js',  // 表示精准匹配
+        }
+    }
 }
