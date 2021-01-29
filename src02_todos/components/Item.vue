@@ -1,7 +1,7 @@
 <template>
   <li :style="{backgroundColor:bgColor}" @mouseenter="mouseEnter(true)" @mouseleave="mouseEnter(false)">
     <label>
-      <input type="checkbox" v-model="todo.completed">
+      <input type="checkbox" v-model="isCompleted">
       <span>{{todo.title}}</span>
     </label>
     <button class="btn btn-danger" v-show="isShow" @click="deleteItem" >删除</button>
@@ -15,18 +15,27 @@
 */
 
 <script>
+import PubSub from 'pubsub-js'
 export default {
   props:{   //声明属性的属性名和属性值的类型
     todo:Object,
-    deleteTodo:{
-      type:Function
-    },
-    index:Number
+    index:Number,
   },
   data(){
     return {
       bgColor:'white',
       isShow:false
+    }
+  },
+  computed:{
+    isCompleted:{
+      get(){
+        return this.todo.completed
+      },
+      set(value){
+        // this.updateTodo(this.todo,value)
+        PubSub.publish('updateTodo',{todo:this.todo,isCheck:value})
+      }
     }
   },
   methods:{
@@ -41,7 +50,7 @@ export default {
     },
     deleteItem(){
       if(confirm('确定删除吗')){
-       this.deleteTodo(this.index);
+       this.$globalEventBus.$emit('deleteTodo',this.index)
       }
     }
   }
