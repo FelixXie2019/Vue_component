@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import App from './App'
-import {Button} from 'mint-ui'
 
-Vue.component(Button.name,Button)
+Vue.config.productionTip=false;
 
 new Vue({
+    beforeCreate() {
+        Vue.prototype.$eventBus=this
+    },
     el:'#root',
     components:{
         App:App

@@ -22,7 +22,13 @@ module.exports={    //配置对象
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['@babel/preset-env'],
+                        plugins:[
+                            ["component", {
+                                "libraryName": "mint-ui",
+                                "style": true
+                        }],
+                            ["@babel/plugin-transform-runtime"]
+                        ]
                     }
                 }
             },
@@ -61,6 +67,7 @@ module.exports={    //配置对象
     },
     //插件
     plugins: [
+
         new HtmlWebpackPlugin({
             template:'index.html', //将哪个页面作为模板页面处理(在根目录查找)
             filename:'index.html' //生成页面(在output指定的path下)
@@ -71,6 +78,14 @@ module.exports={    //配置对象
     devServer: {
         open:true, //自动打开浏览器
         // quiet:true //不做太多的日志输出
+        proxy:{
+            // '/api':'http://localhost:3000'
+            '/api': {
+                target: 'http://localhost:3000',
+                pathRewrite: {'^/api' : ''}
+            },
+            changeOrigin:true  //如果协议/主机也不相同，必须加上
+        }
     },
     // 引入模块的解析
     resolve: {
@@ -78,5 +93,5 @@ module.exports={    //配置对象
         alias: { // 路径别名(简写方式)
             'vue$': 'vue/dist/vue.esm.js',  // 表示精准匹配
         }
-    }
+    },
 }

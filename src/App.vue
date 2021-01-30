@@ -1,24 +1,17 @@
 <template>
-  <div>
-      <p v-if="!repoName">loading...</p>
-      <p v-else>
-          most star repo is
-          <a href="repoUrl">{{repoNmae}}</a>
-      </p>
-  </div>
+  <mt-button type="danger" @click="test">测试mint-ui</mt-button>
 </template>
 
 <script>
 export default {
-  data () {
-    return {
-        repoName:'',
-        repoUrl:'',
+  methods:{
+    test(){
+      alert('----')
     }
-  },
-  methods: {},
+  }
 }
 </script>
 
-<style type="text/css" scoped>
+<style scoped>
+
 </style>
