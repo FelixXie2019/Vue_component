@@ -5,7 +5,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 module.exports={    //配置对象
     //入口
     entry: {
-        app:path.resolve(__dirname,'src02_todos/index.js')
+        app:path.resolve(__dirname,'src/index.js')
     },
     //出口
     output: {
