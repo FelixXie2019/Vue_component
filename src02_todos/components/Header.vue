@@ -7,12 +7,12 @@
 <script>
 export default {
   //声明接受函数：更新数据的函数属性
-  props: {  //属性名，属性值的类型，属性的必要性
-    addTodo: {
-      type: Function,
-      required: true
-    }
-  },
+  // props: {  //属性名，属性值的类型，属性的必要性
+  //   addTodo: {
+  //     type: Function,
+  //     required: true
+  //   }
+  // },
   data() {
     return {
       title: ''
@@ -29,7 +29,7 @@ export default {
         completed: false
       }
       //调用更新的函数，向todos中添加一个todo
-      this.addTodo(todo);
+      this.$globalEventBus.$emit('addTodo',todo)
       //清除输入
       this.title = '';
     }
