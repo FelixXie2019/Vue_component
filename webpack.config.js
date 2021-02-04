@@ -10,7 +10,8 @@ module.exports={    //配置对象
     //出口
     output: {
         filename: "static/js/[name].bundle.js", //可以带路径
-        path: path.resolve(__dirname,'dist')
+        path: path.resolve(__dirname,'dist'),
+        publicPath: "/", //引入打包文件的论净左侧以/开头
     },
     //模块加载器
     module: {
@@ -76,16 +77,23 @@ module.exports={    //配置对象
 
     ],
     devServer: {
+
         open:true, //自动打开浏览器
         // quiet:true //不做太多的日志输出
         proxy:{
-            // '/api':'http://localhost:3000'
+            // '/api':'http://localhost:3000' // http://localhost:3000/api/search/users
             '/api': {
                 target: 'http://localhost:3000',
                 pathRewrite: {'^/api' : ''}
             },
-            changeOrigin:true  //如果协议/主机也不相同，必须加上
-        }
+            '/gh':{
+                target: 'https://api.github.com',
+                pathRewrite: {'^/gh' : ''
+                },
+                changeOrigin:true  //如果协议/主机也不相同，必须加上
+            },
+        },
+        historyApiFallback:true,    //任意的 404 响应都被替代为 index.html
     },
     // 引入模块的解析
     resolve: {
@@ -94,4 +102,5 @@ module.exports={    //配置对象
             'vue$': 'vue/dist/vue.esm.js',  // 表示精准匹配
         }
     },
+    devtool: 'source-map',
 }

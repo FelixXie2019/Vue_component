@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'  //引入自定义组件，记得要用路径
-import store from './store'
+import store from './vuex/store'
 
 
 //注册全局组件

@@ -1,13 +1,19 @@
 <template>
-  <mt-button type="danger" @click="test">测试mint-ui</mt-button>
+  <div class="container">
+    <Search/>
+    <Main/>
+  </div>
+
 </template>
 
 <script>
+import Search from './components/Search'
+import Main from './components/Main'
 export default {
-  methods:{
-    test(){
-      alert('----')
-    }
+
+  components:{
+    Main,
+    Search
   }
 }
 </script>
